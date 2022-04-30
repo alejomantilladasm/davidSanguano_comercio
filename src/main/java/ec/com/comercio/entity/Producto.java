@@ -9,16 +9,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 @Table(name = "productos")
 public class Producto {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	@JsonProperty("cod")
 	@Column(name = "codigo")
 	private String codigo;
+	@JsonProperty("name")
 	@Column(name = "nombre")
 	private String nombre;
+	@JsonProperty("price")
 	@Column(name = "precio")
 	private BigDecimal precio;
 	@Column(name = "stock")

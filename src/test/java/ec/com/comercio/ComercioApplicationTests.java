@@ -1,13 +1,26 @@
 package ec.com.comercio;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.ResponseEntity;
+
+import ec.com.comercio.entity.Cliente;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class ComercioApplicationTests {
 
+	@Autowired
+	private TestRestTemplate restTemplate;
+	
 	@Test
 	void contextLoads() {
+		ResponseEntity<Cliente[]> responseEntity=restTemplate.getForEntity("/cliente",Cliente[].class );
+		
+		assertEquals(2, responseEntity.getBody().length);
 	}
 
 }

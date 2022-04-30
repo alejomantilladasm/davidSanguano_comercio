@@ -1,5 +1,6 @@
 package ec.com.comercio.entity;
 
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +12,7 @@ import javax.persistence.Table;
 @Table(name = "tiendas")
 public class Tienda {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	@Column(name = "codigo")
 	private String codigo;
@@ -23,6 +24,8 @@ public class Tienda {
 	private String correo;
 	@Column(name = "telefono")
 	private String telefono;
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -59,5 +62,4 @@ public class Tienda {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
-	
 }
