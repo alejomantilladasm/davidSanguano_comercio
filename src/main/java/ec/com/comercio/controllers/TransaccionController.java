@@ -11,4 +11,8 @@ import ec.com.comercio.services.TransaccionService;
 @RequestMapping("transaccion")
 public class TransaccionController extends CommonController<Transaccion, TransaccionService> {
 
+	
+
+	
+	
 }

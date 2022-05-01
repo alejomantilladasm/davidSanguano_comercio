@@ -34,5 +34,20 @@ public class ProductoController extends CommonController<Producto, ProductoServi
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(pDB));
 	}
 	
+	@PutMapping("/{id}/{valor}")
+	public ResponseEntity<?> actualizarStock(@PathVariable Long id, @PathVariable int valor) {
+		Optional<Producto> o = service.recuperarById(id);
+		if (o.isEmpty()) {
+			return ResponseEntity.notFound().build();
+		}
+		Producto productoDb = service.actualizarStock(o.get(), valor);
+		if(null!=productoDb) {
+			return ResponseEntity.ok().body(productoDb);
+		}else{
+			return ResponseEntity.badRequest().body("El valor "+valor+" supera la cantidad existente");
+		}
+		
+	}
+	
 	
 }

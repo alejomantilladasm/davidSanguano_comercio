@@ -19,8 +19,7 @@ class ComercioApplicationTests {
 	@Test
 	void contextLoads() {
 		ResponseEntity<Cliente[]> responseEntity=restTemplate.getForEntity("/cliente",Cliente[].class );
-		
-		assertEquals(2, responseEntity.getBody().length);
+		assertEquals(responseEntity.getStatusCodeValue(), 200);
 	}
 
 }

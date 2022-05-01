@@ -1,18 +1,24 @@
 package ec.com.comercio.entity;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "tiendas")
 public class Tienda {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(name = "codigo")
 	private String codigo;
@@ -25,7 +31,12 @@ public class Tienda {
 	@Column(name = "telefono")
 	private String telefono;
 	
+	@ManyToMany(fetch =  FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Producto> productos;
 	
+	public Tienda() {
+		this.productos=new ArrayList<>();
+	}
 	public Long getId() {
 		return id;
 	}
@@ -62,4 +73,17 @@ public class Tienda {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
+	public List<Producto> getProductos() {
+		return productos;
+	}
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
+	}
+	public void agregarProducto(Producto producto) {
+		this.productos.add(producto);
+	}
+	public void eliminarProducto(Producto producto) {
+		this.productos.remove(producto);
+	}
+	
 }

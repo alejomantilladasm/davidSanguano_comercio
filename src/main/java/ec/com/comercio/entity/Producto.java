@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 @Table(name = "productos")
 public class Producto {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@JsonProperty("cod")
 	@Column(name = "codigo")
@@ -28,6 +28,7 @@ public class Producto {
 	private BigDecimal precio;
 	@Column(name = "stock")
 	private int stock;
+	
 	public Long getId() {
 		return id;
 	}
@@ -57,6 +58,18 @@ public class Producto {
 	}
 	public void setStock(int stock) {
 		this.stock = stock;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if(this==obj) {
+			return true;
+		}
+		if(!(obj instanceof Producto)) {
+			return false;
+		}
+		Producto p=(Producto)obj;
+		
+		return this.id!=null && this.id.equals(p.getId());
 	}
 
 }
