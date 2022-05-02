@@ -29,6 +29,15 @@ public class Transaccion {
 	@Column(name = "fecha")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
+	
+	public Transaccion(Long tienda, Long cliente, Long producto, int cantidad, Date fecha) {
+		this.tienda = tienda;
+		this.cliente = cliente;
+		this.producto = producto;
+		this.cantidad = cantidad;
+		this.fecha = fecha;
+	}
+	
 	public Long getId() {
 		return id;
 	}

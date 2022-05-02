@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 
 
 @Entity
@@ -16,12 +18,16 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@Column(name = "cedula_identidad")
+	@NotEmpty
 	private String ci;
 	@Column(name = "nombres")
+	@NotEmpty
 	private String nombres;
 	@Column(name = "apellidos")
+	@NotEmpty
 	private String apellidos;
 	@Column(name = "correo_electronico")
+	@Email
 	private String correo;
 	@Column(name = "direccion")
 	private String direccion;

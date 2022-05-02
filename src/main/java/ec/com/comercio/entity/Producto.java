@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -19,15 +21,19 @@ public class Producto {
 	private Long id;
 	@JsonProperty("cod")
 	@Column(name = "codigo")
+	@NotEmpty
 	private String codigo;
 	@JsonProperty("name")
 	@Column(name = "nombre")
+	@NotEmpty
 	private String nombre;
 	@JsonProperty("price")
 	@Column(name = "precio")
+	@NotNull
 	private BigDecimal precio;
 	@Column(name = "stock")
-	private int stock;
+	@NotNull
+	private Integer stock;
 	
 	public Long getId() {
 		return id;
@@ -53,10 +59,10 @@ public class Producto {
 	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
 	}
-	public int getStock() {
+	public Integer getStock() {
 		return stock;
 	}
-	public void setStock(int stock) {
+	public void setStock(Integer stock) {
 		this.stock = stock;
 	}
 	@Override

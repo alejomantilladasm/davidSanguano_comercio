@@ -1,9 +1,15 @@
 package ec.com.comercio.common;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,7 +36,11 @@ public class CommonController<T,S extends CommonService<T>> {
 	}
 	
 	@PostMapping
-	public ResponseEntity<?> guardar(@RequestBody T t){
+	public ResponseEntity<?> guardar(@Valid @RequestBody T t, BindingResult bidResult){
+		if(bidResult.hasErrors()) {
+			return this.validar(bidResult);
+		}
+		
 		T tDb=service.guardar(t);
 		return ResponseEntity.status(HttpStatus.CREATED).body(tDb);
 	}
@@ -39,6 +49,14 @@ public class CommonController<T,S extends CommonService<T>> {
 	public ResponseEntity<?> eliminarById(@PathVariable Long id){
 		service.eliminarById(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	protected ResponseEntity<?> validar(BindingResult bidResult) {
+		Map<String,Object> errors=new HashMap<>();
+		bidResult.getFieldErrors().forEach(e->{
+			errors.put(e.getField(),"El campo "+e.getField()+" "+ e.getDefaultMessage());
+		});
+		return ResponseEntity.badRequest().body(errors);		
 	}
 
 }

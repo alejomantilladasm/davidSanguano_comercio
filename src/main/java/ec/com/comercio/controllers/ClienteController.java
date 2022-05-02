@@ -6,7 +6,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,17 +40,6 @@ public class ClienteController extends CommonController<Cliente, ClienteService>
 			return ResponseEntity.notFound().build();
 		}
 		return ResponseEntity.status(HttpStatus.CREATED).body(cli);
-	}
-	
-	@PostMapping
-	@Override
-	public ResponseEntity<?> guardar(@RequestBody Cliente cliente){
-		if(null==cliente || null==cliente.getNombres()|| null==cliente.getApellidos()|| null==cliente.getCi()
-				|| "".equals(cliente.getNombres())|| "".equals(cliente.getApellidos())|| "".equals(cliente.getCi())  ) {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Los campos de nombres, apellidos y cedula son obligatorias...! ");
-		}
-		Cliente clientedb=service.guardar(cliente);
-		return ResponseEntity.status(HttpStatus.CREATED).body(clientedb);
 	}
 
 }
