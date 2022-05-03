@@ -30,6 +30,10 @@ public class Transaccion {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
 	
+	public Transaccion() {
+	}
+	
+	
 	public Transaccion(Long tienda, Long cliente, Long producto, int cantidad, Date fecha) {
 		this.tienda = tienda;
 		this.cliente = cliente;

@@ -6,12 +6,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.client.RestTemplate;
 
 import ec.com.comercio.entity.Producto;
 import ec.com.comercio.services.ProductoService;
 
 @SpringBootApplication
+@EnableAsync
 public class ComercioApplication {
 
 	public static void main(String[] args) {

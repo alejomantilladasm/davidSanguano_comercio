@@ -35,6 +35,17 @@ public class Cliente {
 	private String celular;
 	@Column(name = "foto")
 	private String foto;
+	public Cliente() {
+	}
+	public Cliente(String ci, String nombres, String apellidos, String correo, String direccion, String celular, String foto) {
+		this.ci = ci;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.correo = correo;
+		this.direccion = direccion;
+		this.celular = celular;
+		this.foto = foto;
+	}
 	public Long getId() {
 		return id;
 	}

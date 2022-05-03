@@ -2,3 +2,5 @@ INSERT IGNORE INTO `comercio`.`tiendas` (`id`, `codigo`, `correo`, `direccion`, 
 INSERT IGNORE INTO `comercio`.`tiendas` (`id`, `codigo`, `correo`, `direccion`, `nombre`, `telefono`) VALUES (2, 'tienda-2', 'tienda2@hotmail.com', 'Av. 3 y Av. 4', 'Tienda 2', '0999999999');
 INSERT IGNORE INTO `comercio`.`tiendas` (`id`, `codigo`, `correo`, `direccion`, `nombre`, `telefono`) VALUES (3, 'tienda-3', 'tienda3@hotmail.com', 'Av. 5 y Av. 6', 'Tienda 3', '0999999999');
 INSERT IGNORE INTO `comercio`.`tiendas` (`id`, `codigo`, `correo`, `direccion`, `nombre`, `telefono`) VALUES (4, 'tienda-4', 'tienda4@hotmail.com', 'Av. 7 y Av. 8', 'Tienda 4', '0999999999');
+
+INSERT IGNORE INTO `comercio`.`clientes` (`id`, `apellidos`, `celular`, `cedula_identidad`, `correo_electronico`, `direccion`, `foto`, `nombres`) VALUES ('1', 'Sanguano', '0999999999', '1717274847', 'dsanguano@gmail.com', 'Av. 1 y Av. 2 ', NULL, 'David');

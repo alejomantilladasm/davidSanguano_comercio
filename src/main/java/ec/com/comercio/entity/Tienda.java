@@ -30,7 +30,14 @@ public class Tienda {
 	private String correo;
 	@Column(name = "telefono")
 	private String telefono;
-	
+	public Tienda(String codigo, String nombre, String direccion, String correo, String telefono, List<Producto> productos) {
+		this.codigo = codigo;
+		this.nombre = nombre;
+		this.direccion = direccion;
+		this.correo = correo;
+		this.telefono = telefono;
+		this.productos = productos;
+	}
 	@ManyToMany(fetch =  FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Producto> productos;
 	

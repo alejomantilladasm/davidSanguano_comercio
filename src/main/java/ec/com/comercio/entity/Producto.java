@@ -35,6 +35,14 @@ public class Producto {
 	@NotNull
 	private Integer stock;
 	
+	public Producto() {
+	}
+	public Producto( String codigo,  String nombre,  BigDecimal precio, Integer stock) {
+		this.codigo = codigo;
+		this.nombre = nombre;
+		this.precio = precio;
+		this.stock = stock;
+	}
 	public Long getId() {
 		return id;
 	}

@@ -14,32 +14,44 @@ import org.springframework.web.bind.annotation.RestController;
 import ec.com.comercio.common.CommonController;
 import ec.com.comercio.entity.Cliente;
 import ec.com.comercio.services.ClienteService;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("cliente")
 public class ClienteController extends CommonController<Cliente, ClienteService> {
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> editar(@RequestBody Cliente cliente, @PathVariable Long id) {
-		Optional<Cliente> o = service.recuperarById(id);
-		if (o.isEmpty()) {
-			return ResponseEntity.notFound().build();
+		try {
+			Optional<Cliente> o = service.recuperarById(id);
+			if (o.isEmpty()) {
+				return ResponseEntity.notFound().build();
+			}
+			Cliente cDB = o.get();
+			cDB.setCorreo(cliente.getCorreo());
+			cDB.setDireccion(cliente.getDireccion());
+			cDB.setCelular(cliente.getCelular());
+			cDB.setFoto(cliente.getFoto());
+			return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(cDB));
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
-		Cliente cDB = o.get();
-		cDB.setCorreo(cliente.getCorreo());
-		cDB.setDireccion(cliente.getDireccion());
-		cDB.setCelular(cliente.getCelular());
-		cDB.setFoto(cliente.getFoto());
-		return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(cDB));
 	}
-	
+
 	@GetMapping("cedula/{ci}")
-	public ResponseEntity<?> recuperarPorCi(@PathVariable String ci ) {
-		Cliente cli= service.recuperarPorCedula(ci);
-		if (null==cli) {
-			return ResponseEntity.notFound().build();
+	public ResponseEntity<?> recuperarPorCi(@PathVariable String ci) {
+		try {
+			Cliente cli = service.recuperarPorCedula(ci);
+			if (null == cli) {
+				return ResponseEntity.notFound().build();
+			}
+			return ResponseEntity.status(HttpStatus.CREATED).body(cli);
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
-		return ResponseEntity.status(HttpStatus.CREATED).body(cli);
 	}
 
 }
