@@ -19,4 +19,9 @@ public interface TransaccionRepository extends CrudRepository<Transaccion, Long>
 	@Query(value = "select * from transacciones where cliente=?1 and DATE(fecha) BETWEEN DATE(?2) and DATE(?3)",nativeQuery = true)
 	public List<Transaccion> reporteTotalPorClienteEntreFechas(Long idCliente,Date fechaInicio, Date fechaFin);	
 	
+	@Query("select t.tienda from Transaccion t group by t.tienda order by t.tienda")
+	public List<Object[]> recuperarTiendas();	
+	
+	@Query("select t.producto, sum(t.cantidad) from Transaccion t where t.tienda=?1 group by t.producto")
+	public List<Object[]> reporteProductoPorTienda(Long idTienda);	
 }

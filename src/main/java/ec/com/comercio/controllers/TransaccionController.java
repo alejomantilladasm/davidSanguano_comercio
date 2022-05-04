@@ -6,6 +6,8 @@ import java.util.Date;
 
 import javax.validation.Valid;
 
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -105,6 +107,45 @@ public class TransaccionController extends CommonController<Transaccion, Transac
 		} catch (ParseException e) {
 			log.error(e.getMessage(), e);
 			return ResponseEntity.badRequest().body("El el formato de las fechas debe ser yyyy-MM-dd...!");
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
+	
+	
+	
+	@GetMapping("/reporte/tienda/productos")
+	public ResponseEntity<?> reporteTiendaProductos() {
+		try {
+			return ResponseEntity.ok().body(service.reportePorTiendaProducto());
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+		}
+	}
+	
+	
+	
+	@GetMapping(value = "/reporte/csv/{idCliente}", produces = "text/csv")
+	public ResponseEntity<?> reporteCsv(@Valid @RequestBody FechasReporte fechasReporte, BindingResult bidResult,
+			@PathVariable Long idCliente) {
+		try {
+			if (bidResult.hasErrors()) {
+				return this.validar(bidResult);
+			}
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			InputStreamResource fileInputStream = new InputStreamResource(service.generarCsv(idCliente, sdf.parse(fechasReporte.getFechaInicio()), sdf.parse(fechasReporte.getFechaFin())));
+			
+			String csvFileName = "reporte.csv";
+			
+			// setting HTTP headers
+		    HttpHeaders headers = new HttpHeaders();
+		    headers.set(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + csvFileName);
+		    // defining the custom Content-Type
+		    headers.set(HttpHeaders.CONTENT_TYPE, "text/csv");
+			
+		    return new ResponseEntity<>(fileInputStream,headers, HttpStatus.OK);
 		} catch (Exception e) {
 			log.error(e.getMessage(), e);
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
